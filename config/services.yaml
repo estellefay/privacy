@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    api_key_authenticator:
+       class: AppBundle\Security\TokenAuthenticator
+       arguments: ["@router"]
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

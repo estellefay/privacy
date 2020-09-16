@@ -51,6 +51,11 @@ class User implements UserInterface
       */
      private $players;
 
+     /**
+      * @ORM\Column(type="string", length=255)
+      */
+     private $name;
+
      public function __construct()
      {
          $this->games = new ArrayCollection();
@@ -193,6 +198,18 @@ class User implements UserInterface
                 $player->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

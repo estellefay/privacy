@@ -23,7 +23,7 @@ class Question
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="question")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;

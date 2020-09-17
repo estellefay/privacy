@@ -2,21 +2,18 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
-use App\Entity\Question;
-use App\Entity\User;
+
 use App\Entity\Player;
-use App\Entity\Game;
-
+use App\DataFixtures\UserFixtures;
+use App\DataFixtures\GameFixtures;
 use Faker;
-
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PlayerFixtures extends Fixture
+
+class PlayerFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -26,10 +23,20 @@ class PlayerFixtures extends Fixture
             $player->setName($faker->userName);
             $player->setPoint(0);
             $player->setStar(0);
+            // this reference returns the User object created in UserFixtures
+            $player->setUser($this->getReference(UserFixtures::USER_PLAYER_REFERENCE));
+            // this reference returns the User object created in UserFixtures
+            $player->setGame($this->getReference(GameFixtures::GAME_PLAYER_REFERENCE));
             $manager->persist($player);
         }
         $manager->flush();
+    }
 
-
+    public function getDependencies()
+    {
+        return array(
+            UserFixtures::class,
+            GameFixtures::class,
+        );
     }
 }

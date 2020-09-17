@@ -13,6 +13,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     private $encoder;
+    public const USER_PLAYER_REFERENCE = 0;
+    public const USER_GAME_REFERENCE = 2;
 
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -33,5 +35,9 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
         $manager->flush();
+        // other fixtures can get this object using the UserFixtures::ADMIN_USER_REFERENCE constant
+        $this->addReference(self::USER_PLAYER_REFERENCE, $user);
+        $this->addReference(self::USER_GAME_REFERENCE, $user);
+
     }
 }

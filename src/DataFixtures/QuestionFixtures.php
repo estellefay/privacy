@@ -10,12 +10,9 @@ use App\Entity\Game;
 
 use App\DataFixtures\CategoryFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-
 use Faker;
-
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class QuestionFixtures extends Fixture implements DependentFixtureInterface
 {    

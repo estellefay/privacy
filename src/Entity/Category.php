@@ -59,23 +59,23 @@ class Category
         return $this->questions;
     }
 
-    public function addQuestions(Question $questions): self
+    public function addQuestion(Question $question): self
     {
-        if (!$this->questions->contains($questions)) {
-            $this->questions[] = $questions;
-            $questions->setCategory($this);
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+            $question->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeQuestions(Question $questions): self
+    public function removeQuestion(Question $question): self
     {
-        if ($this->questions->contains($questions)) {
-            $this->questions->removeElement($questions);
+        if ($this->questions->contains($question)) {
+            $this->questions->removeElement($question);
             // set the owning side to null (unless already changed)
-            if ($questions->getCategory() === $this) {
-                $questions->setCategory(null);
+            if ($question->getCategory() === $this) {
+                $question->setCategory(null);
             }
         }
 

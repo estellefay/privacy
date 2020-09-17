@@ -213,4 +213,16 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
 }

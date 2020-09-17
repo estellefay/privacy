@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}category index{% endblock %}
+{% block title %}Game index{% endblock %}
 
 {% block body %}
-    <h1>category index</h1>
+    <h1>Game index</h1>
 
     <table class="table">
         <thead>
@@ -13,13 +13,12 @@
             </tr>
         </thead>
         <tbody>
-        {% for category in categories %}
+        {% for game in games %}
             <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
+                <td>{{ game.id }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
+                    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -30,5 +29,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+    <a href="{{ path('game_new') }}">Create new</a>
 {% endblock %}

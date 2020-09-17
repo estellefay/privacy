@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use App\Entity\Question;
 use App\Entity\User;
 use App\Entity\Player;
 use App\Entity\Game;

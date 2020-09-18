@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Player{% endblock %}
+
+{% block body %}
+    <div class="columns is-mobile">
+        <div class="column">
+            <h1>Selectionner un joueur</h1>
+            {% for player in players %}
+                <p>{{ player.name }}</p>
+            {% endfor %}
+            <button class="button is-primary" onclick="showModal()">Ajouter un joueur</button>
+        </div>
+        <div class="column">
+            <button class="button is-primary" >Lancer la partie</button>
+        </div>
+    </div>
+       
+    <!-- pop up -->
+    <div class="modal">
+        <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Ajouter un joueur</p>
+                    <button class="delete" aria-label="close" onclick="closeModal()"></button>
+                </header>
+                <section class="modal-card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                        <button class="btn button" onclick="closeModal()">{{ button_label|default('Save') }}</button>
+                    {{ form_end(form) }}
+                </section>
+                    <footer class="modal-card-foot">
+                    <!-- ref action controller link -->
+                    <button class="button is-success">Save changes</button>
+                    <!-- close only -->
+                    <button class="button" onclick="closeModal()">Cancel</button>
+                </footer>
+            </div>
+        </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function showModal() {
+            document.querySelector(".modal").classList.add("is-active");  
+        }
+
+        function closeModal() {
+            document.querySelector(".modal").classList.remove("is-active");  
+        }
+    </script>
+{% endblock %}

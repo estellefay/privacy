@@ -1,0 +1,23 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Home Privacy{% endblock %}
+
+{% block body %}
+<section class="section">
+    <div class="container">
+      <h1 class="title">
+        Bienvenue sur PRIVACY
+      </h1>
+      <p class="subtitle">
+       Prêt à jouer <strong>GO</strong>!
+      </p>
+    </div>
+    <div class="buttons">
+        <button class="button is-primary">Commencer une partie</button>
+        <button class="button is-link">
+            <a href="{{ path('player_user_show') }}">Les joueurs</a>
+        </button>
+      </div>
+  </section>
+{% endblock %}

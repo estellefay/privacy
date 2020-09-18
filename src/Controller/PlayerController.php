@@ -16,11 +16,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayerController extends AbstractController
 {
     /**
-     * @Route("/", name="player_index", methods={"GET"})
+     * @Route("/", name="player_user_show", methods={"GET"})
+     */
+    public function showAll(PlayerRepository $playerRepository, Request $request): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Player::class);
+
+        // query for multiple products matching the given name, ordered by price
+        $players = $repository->findBy(
+            array('user' => 50),
+        );
+        $player = new Player();
+        $form = $this->createForm(PlayerType::class, $player);
+        $form->handleRequest($request);
+        //$repository = $this->getDoctrine()->getRepository(Player::class);
+        //$players = $repository->finfAllPlayerByUser($userid);
+        //var_dump($playerRepository->finfAllPlayerByUser(50)).die();
+        return $this->render('user/player/show.html.twig', [
+            'players' => $repository->findBy(array('user' => 50)),
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * @Route("/all", name="player_index", methods={"GET"})
      */
     public function index(PlayerRepository $playerRepository): Response
     {
-        return $this->render('player/index.html.twig', [
+        return $this->render('admin/player/index.html.twig', [
             'players' => $playerRepository->findAll(),
         ]);
     }
@@ -42,7 +65,7 @@ class PlayerController extends AbstractController
             return $this->redirectToRoute('player_index');
         }
 
-        return $this->render('player/new.html.twig', [
+        return $this->render('admin/player/new.html.twig', [
             'player' => $player,
             'form' => $form->createView(),
         ]);
@@ -53,7 +76,7 @@ class PlayerController extends AbstractController
      */
     public function show(Player $player): Response
     {
-        return $this->render('player/show.html.twig', [
+        return $this->render('admin/player/show.html.twig', [
             'player' => $player,
         ]);
     }
@@ -72,7 +95,7 @@ class PlayerController extends AbstractController
             return $this->redirectToRoute('player_index');
         }
 
-        return $this->render('player/edit.html.twig', [
+        return $this->render('admin/player/edit.html.twig', [
             'player' => $player,
             'form' => $form->createView(),
         ]);

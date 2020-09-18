@@ -6,6 +6,7 @@ use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method Player|null find($id, $lockMode = null, $lockVersion = null)
  * @method Player|null findOneBy(array $criteria, array $orderBy = null)
@@ -17,6 +18,30 @@ class PlayerRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Player::class);
+    }
+
+    /**
+     * @return Player[] Returns an array of Player objects reférence by id_user
+     */
+    
+    public function finfAllPlayerByUser($id): Player
+    {
+
+        // $qb = $this->createQueryBuilder('p')
+        // ->where('p.user = :price')
+        // ->setParameter('price', $id);
+
+        // $query = $qb->getQuery();
+
+        // return $query->execute();
+
+        // return $this->createQueryBuilder('p')
+        //     ->andWhere('p.user = :val')
+        //     ->setParameter('val', $id)
+        //     ->orderBy('p.id', 'ASC')
+        //     ->getQuery()
+        //     ->getResult()
+        // ;
     }
 
     // /**

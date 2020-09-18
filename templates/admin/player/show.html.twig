@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>Player</h1>
+    <?php var_dump($players) ?>
 
     <table class="table">
         <tbody>
@@ -30,5 +31,5 @@
 
     <a href="{{ path('player_edit', {'id': player.id}) }}">edit</a>
 
-    {{ include('player/_delete_form.html.twig') }}
+    {{ include('admin/player/_delete_form.html.twig') }}
 {% endblock %}

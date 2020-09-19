@@ -7,7 +7,14 @@
         <div class="column">
             <h1>Selectionner un joueur</h1>
             {% for player in players %}
-                <p>{{ player.name }}</p>
+            <div class="columns is-desktop is-half">
+                <div class="column is-one-quarter is-half">
+                    <p>{{ player.name }}</p> 
+                </div>
+                <div class="column is-one-quarter is-half">
+                    {{ include('user/player/_delete_form.html.twig') }}
+                </div>
+            </div>
             {% endfor %}
             <button class="button is-primary" onclick="showModal()">Ajouter un joueur</button>
         </div>
@@ -25,7 +32,7 @@
                     <!-- Il faut préciser l'action dans le formulaire -->
                     {{ form_start(form, {'action': path('player_new' , {'form': form } ) }) }}
                        {{ form_widget(form) }}
-                        <button class="btn">{{ button_label|default('Save') }}</button>
+                        <button class="btn button is-success is-light">{{ button_label|default('Save') }}</button>
                     {{ form_end(form) }}
                 </section>
                     <footer class="modal-card-foot">
@@ -40,14 +47,14 @@
     <script>
         function showModal() {
             document.querySelector(".modal").classList.add("is-active");  
-            url = $(this).attr('data-target');
-             //on fait un appel ajax vers l'action symfony qui nous renvoie la vue
-             document.querySelector.get(url, function (data) {
-            //on injecte le html dans la modale
-            document.querySelector('.modal-content').html(data);
-            //on ouvre la modale
-            document.querySelector('#modal1').modal('open');
-        });
+            // url = $(this).attr('data-target');
+            //  //on fait un appel ajax vers l'action symfony qui nous renvoie la vue
+            //document.querySelector.get(url, function (data) {
+            // //on injecte le html dans la modale
+            //document.querySelector('.modal-content').html(data);
+            // //on ouvre la modale
+           //  document.querySelector('#modal1').modal('open');
+       // });
         }
 
         function closeModal() {

@@ -24,24 +24,9 @@ class PlayerRepository extends ServiceEntityRepository
      * @return Player[] Returns an array of Player objects reférence by id_user
      */
     
-    public function finfAllPlayerByUser($id): Player
+    public function AddPlayer($id): Player
     {
 
-        // $qb = $this->createQueryBuilder('p')
-        // ->where('p.user = :price')
-        // ->setParameter('price', $id);
-
-        // $query = $qb->getQuery();
-
-        // return $query->execute();
-
-        // return $this->createQueryBuilder('p')
-        //     ->andWhere('p.user = :val')
-        //     ->setParameter('val', $id)
-        //     ->orderBy('p.id', 'ASC')
-        //     ->getQuery()
-        //     ->getResult()
-        // ;
     }
 
     // /**

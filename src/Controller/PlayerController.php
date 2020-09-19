@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Form\PlayerType;
 use App\Repository\PlayerRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,45 +16,57 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PlayerController extends AbstractController
 {
+    var $userID = 50;
     /**
      * @Route("/", name="player_user_show", methods={"GET"})
      */
-    public function showAll(PlayerRepository $playerRepository, Request $request): Response
+    public function showAll(PlayerRepository $playerRepository, UserRepository $userRepository, Request $request): Response
     {
         $repository = $this->getDoctrine()->getRepository(Player::class);
 
-        // query for multiple products matching the given name, ordered by price
+        // Recup player d'un user
         $players = $repository->findBy(
-            array('user' => 50),
+            array('user' => $this->userID),
         );
+
+        // // recup User 
+        // $user = $userRepository->findOneById(50);
+
+
+        // create form for new player ( MODAL )
         $player = new Player();
-        $form = $this->createForm(PlayerType::class, $player);
+        //$player->setUser($user);
+        $form = $this->createForm(PlayerType::class, $player );
         $form->handleRequest($request);
-        //$repository = $this->getDoctrine()->getRepository(Player::class);
-        //$players = $repository->finfAllPlayerByUser($userid);
-        //var_dump($playerRepository->finfAllPlayerByUser(50)).die();
+
+
         return $this->render('user/player/show.html.twig', [
-            'players' => $repository->findBy(array('user' => 50)),
+            'players' => $repository->findBy(array('user' => $this->userID)),
             'form' => $form->createView(),
         ]);
     }
     
-    /**
-     * @Route("/all", name="player_index", methods={"GET"})
-     */
-    public function index(PlayerRepository $playerRepository): Response
-    {
-        return $this->render('admin/player/index.html.twig', [
-            'players' => $playerRepository->findAll(),
-        ]);
-    }
+    // /**
+    //  * @Route("/all", name="player_index", methods={"GET"})
+    //  */
+    // public function index(PlayerRepository $playerRepository): Response
+    // {
+    //     return $this->render('admin/player/index.html.twig', [
+    //         'players' => $playerRepository->findAll(),
+    //     ]);
+    // }
 
     /**
      * @Route("/new", name="player_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserRepository $userRepository): Response
     {
+        // Récuperartion User
+        $user = $userRepository->findOneById($this->userID);  
+        // Creation new formulaire 
         $player = new Player();
+        // Ajout de user
+        $player->setUser($user);
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
@@ -61,11 +74,10 @@ class PlayerController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($player);
             $entityManager->flush();
-
-            return $this->redirectToRoute('player_index');
+            return $this->redirectToRoute('player_user_show');
         }
 
-        return $this->render('admin/player/new.html.twig', [
+        return $this->render('user/player/new.html.twig', [
             'player' => $player,
             'form' => $form->createView(),
         ]);

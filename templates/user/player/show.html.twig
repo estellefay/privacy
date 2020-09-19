@@ -11,9 +11,6 @@
             {% endfor %}
             <button class="button is-primary" onclick="showModal()">Ajouter un joueur</button>
         </div>
-        <div class="column">
-            <button class="button is-primary" >Lancer la partie</button>
-        </div>
     </div>
        
     <!-- pop up -->
@@ -25,14 +22,13 @@
                     <button class="delete" aria-label="close" onclick="closeModal()"></button>
                 </header>
                 <section class="modal-card-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                        <button class="btn button" onclick="closeModal()">{{ button_label|default('Save') }}</button>
+                    <!-- Il faut préciser l'action dans le formulaire -->
+                    {{ form_start(form, {'action': path('player_new' , {'form': form } ) }) }}
+                       {{ form_widget(form) }}
+                        <button class="btn">{{ button_label|default('Save') }}</button>
                     {{ form_end(form) }}
                 </section>
                     <footer class="modal-card-foot">
-                    <!-- ref action controller link -->
-                    <button class="button is-success">Save changes</button>
                     <!-- close only -->
                     <button class="button" onclick="closeModal()">Cancel</button>
                 </footer>
@@ -44,10 +40,19 @@
     <script>
         function showModal() {
             document.querySelector(".modal").classList.add("is-active");  
+            url = $(this).attr('data-target');
+             //on fait un appel ajax vers l'action symfony qui nous renvoie la vue
+             document.querySelector.get(url, function (data) {
+            //on injecte le html dans la modale
+            document.querySelector('.modal-content').html(data);
+            //on ouvre la modale
+            document.querySelector('#modal1').modal('open');
+        });
         }
 
         function closeModal() {
             document.querySelector(".modal").classList.remove("is-active");  
         }
+        
     </script>
 {% endblock %}

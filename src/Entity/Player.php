@@ -26,12 +26,12 @@ class Player
     /**
      * @ORM\Column(type="integer")
      */
-    private $point;
+    private $point = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $star;
+    private $star = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="players")

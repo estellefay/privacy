@@ -37,31 +37,33 @@ class User implements UserInterface
     private $password;
 
     /**
-    * @ORM\Column(type="string", unique=true, nullable=true)
-    */
-     private $apiToken;
-
-     /**
-      * @ORM\OneToMany(targetEntity=Game::class, mappedBy="user")
+      * @ORM\Column(type="string", unique=true, nullable=true)
       */
-     private $games;
+    private $apiToken;
 
-     /**
-      * @ORM\OneToMany(targetEntity=Player::class, mappedBy="user")
-      */
-     private $players;
+    /**
+     * @ORM\OneToMany(targetEntity=Player::class, mappedBy="user")
+     */
+    private $players;
 
-     /**
-      * @ORM\Column(type="string", length=255)
-      */
-     private $name;
+    /**
+     * @ORM\OneToOne(targetEntity=Game::class, cascade={"persist", "remove"})
+     */
+    private $game;
 
-     public function __construct()
-     {
-         $this->games = new ArrayCollection();
-         $this->players = new ArrayCollection();
-     }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
+
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
+
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -141,37 +143,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Game[]
-     */
-    public function getGames(): Collection
-    {
-        return $this->games;
-    }
-
-    public function addGame(Game $game): self
-    {
-        if (!$this->games->contains($game)) {
-            $this->games[] = $game;
-            $game->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): self
-    {
-        if ($this->games->contains($game)) {
-            $this->games->removeElement($game);
-            // set the owning side to null (unless already changed)
-            if ($game->getUser() === $this) {
-                $game->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Player[]
      */
     public function getPlayers(): Collection
@@ -202,6 +173,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    public function setGame(?Game $game): self
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -214,15 +197,5 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getApiToken(): ?string
-    {
-        return $this->apiToken;
-    }
 
-    public function setApiToken(?string $apiToken): self
-    {
-        $this->apiToken = $apiToken;
-
-        return $this;
-    }
 }

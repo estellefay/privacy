@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
- * @ORM\Table(name="player")
  */
 class Player
 {
@@ -24,24 +23,25 @@ class Player
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="players")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $point = 0;
+    private $user;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $star = 0;
+    private $point;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $star;
 
     /**
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="players")
      */
     private $game;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="players")
-     */
-    private $user;
 
     public function getId(): ?int
     {
@@ -56,6 +56,18 @@ class Player
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
@@ -92,18 +104,6 @@ class Player
     public function setGame(?Game $game): self
     {
         $this->game = $game;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

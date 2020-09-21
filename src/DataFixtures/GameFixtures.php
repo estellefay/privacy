@@ -17,8 +17,9 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $game = new Game();
+            $game->setNbPlayer(5);
             // this reference returns the User object created in UserFixtures
             $game->setUser($this->getReference(UserFixtures::USER_GAME_REFERENCE));
             $manager->persist($game);

@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Player;
 use App\DataFixtures\UserFixtures;
-use App\DataFixtures\GameFixtures;
 use Faker;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,15 +17,13 @@ class PlayerFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
         // Create player
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $player = new Player();
             $player->setName($faker->userName);
             $player->setPoint(0);
             $player->setStar(0);
             // this reference returns the User object created in UserFixtures
             $player->setUser($this->getReference(UserFixtures::USER_PLAYER_REFERENCE));
-            // this reference returns the User object created in UserFixtures
-            $player->setGame($this->getReference(GameFixtures::GAME_PLAYER_REFERENCE));
             $manager->persist($player);
         }
         $manager->flush();
@@ -36,7 +33,6 @@ class PlayerFixtures extends Fixture implements DependentFixtureInterface
     {
         return array(
             UserFixtures::class,
-            GameFixtures::class,
         );
     }
 }

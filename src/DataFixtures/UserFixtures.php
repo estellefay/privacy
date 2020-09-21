@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 
 use Faker;
-
+use App\Entity\Game;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -25,7 +25,7 @@ class UserFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
         // Create user
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setName($faker->firstName);
             $user->setEmail($faker->email);

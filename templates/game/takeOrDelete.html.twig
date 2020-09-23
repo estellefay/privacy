@@ -1,0 +1,31 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Home Privacy{% endblock %}
+
+{% block body %}
+<section class="section">
+    <div class="container">
+      <h1 class="title">
+        Bienvenue sur TALK
+      </h1>
+      <p class="subtitle">
+       Prêt à jouer <strong>GO</strong>!
+      </p>
+    </div>
+    <div class="buttons">
+      <button class="button is-primary">
+        <a href="{{ path('game_index') }}">          
+            Reprendre la partie
+        </a>
+      </button>
+    <!-- {{ include('game/_delete_form.html.twig') }} -->
+
+        <form method="post" action="{{ path('game_delete', {'id': game.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ game.id) }}">
+            <button class="btn">Delete</button>
+        </form>
+    </div>
+  </section>
+{% endblock %}

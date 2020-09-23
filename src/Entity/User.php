@@ -47,7 +47,8 @@ class User implements UserInterface
     private $players;
 
     /**
-     * @ORM\OneToOne(targetEntity=Game::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Game::class, cascade={"persist", "remove"}, inversedBy="user")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $game;
 
@@ -193,6 +194,18 @@ class User implements UserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }
